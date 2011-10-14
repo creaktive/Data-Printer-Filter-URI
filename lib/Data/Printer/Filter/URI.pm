@@ -12,13 +12,13 @@ use Term::ANSIColor;
 
 =head1 SYNOPSIS
 
-In your program:
+# In your program:
 
     use Data::Printer filters => {
         -external => [ 'URI' ],
     };
 
-or, in your C<.dataprinter> file:
+# or, in your C<.dataprinter> file:
 
     {
         filters => {
@@ -26,7 +26,7 @@ or, in your C<.dataprinter> file:
         },
     };
 
-You can also setup color and display details:
+# You can also setup color and display details:
 
     use Data::Printer {
         filters => {
