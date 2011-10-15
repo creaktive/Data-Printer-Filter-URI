@@ -32,7 +32,8 @@ use Term::ANSIColor;
         filters => {
             -external   => [ 'URI' ],
         }, color => {
-            uri         => 'bright_yellow',
+            uri_scheme  => 'bright_green',
+            uri_host    => 'bold',
         },
     };
 
@@ -105,8 +106,13 @@ our @schemes = qw(
 
 filter "URI::$_" => sub {
     my ($obj, $p) = @_;
-    my $color = $p->{color}{uri};
-    return colored('"' . $obj->as_string . '"', $color // 'bright_yellow');
+
+    my $str = $obj->as_string;
+
+    $str =~ s{^@{[$obj->scheme]}}{colored($obj->scheme, $p->{color}{uri_scheme} // 'bright_green')}e;
+    $str =~ s{@{[$obj->host]}}{colored($obj->host, $p->{color}{uri_host} // 'bold')}e;
+
+    return $str;
 } for @schemes;
 
 1;

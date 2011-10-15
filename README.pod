@@ -6,7 +6,7 @@ Data::Printer::Filter::URI - pretty-printing URI objects
 
 =head1 VERSION
 
-version 0.001
+version 0.002
 
 =head1 SYNOPSIS
 
@@ -30,7 +30,8 @@ version 0.001
         filters => {
             -external   => [ 'URI' ],
         }, color => {
-            uri         => 'bright_yellow',
+            uri_scheme  => 'bright_green',
+            uri_host    => 'bold',
         },
     };
 
