@@ -3,7 +3,7 @@ package Data::Printer::Filter::URI;
 
 use strict;
 use utf8;
-use warnings 'all';
+use warnings qw(all);
 
 use Data::Printer::Filter;
 use Term::ANSIColor;
@@ -102,15 +102,42 @@ our @schemes = qw(
     telnet
     tn3270
     urn
+    urn::oid
 );
 
-filter "URI::$_" => sub {
+filter qq(URI::$_) => sub {
     my ($obj, $p) = @_;
 
     my $str = $obj->as_string;
 
-    $str =~ s{^@{[$obj->scheme]}}{colored($obj->scheme, $p->{color}{uri_scheme} // 'bright_green')}e;
-    $str =~ s{@{[$obj->host]}}{colored($obj->host, $p->{color}{uri_host} // 'bold')}e;
+    $str =~ s{^
+        \b
+        @{[$obj->scheme]}
+        \b
+    }{
+        colored(
+            $obj->scheme,
+            exists($p->{color}{uri_scheme})
+                ? $p->{color}{uri_scheme}
+                : q(bright_green)
+        )
+    }ex if defined $obj->scheme;
+
+    $str =~ s{
+        \b
+        \Q
+        @{[$obj->host]}
+        \E
+        \b
+    }{
+        colored(
+            $obj->host,
+            exists($p->{color}{uri_host})
+                ? $p->{color}{uri_host}
+                : q(bold)
+        )
+    }ex if $obj->can(q(host))
+        and defined $obj->host;
 
     return $str;
 } for @schemes;

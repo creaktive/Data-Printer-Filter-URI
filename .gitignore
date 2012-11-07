@@ -1,4 +1,8 @@
-.build/
-Data-Printer-Filter-URI-*/
+.build/*
+Data-Printer-Filter-URI-*/*
+blib/*
 *.bak
 *.gz
+Makefile
+pm_to_blib
+nytprof*
