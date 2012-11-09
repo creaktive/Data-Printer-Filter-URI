@@ -29,7 +29,7 @@ my @uri = map { chomp; URI->new($_) } <DATA>;
 push @uri, url(q(http://ifconfig.me));
 
 for my $uri (@uri) {
-    is(p($uri), $uri->as_string, $uri->canonical);
+    is(p($uri), qq($uri), $uri->canonical);
 
     my $scheme = $uri->scheme;
     delete $cover{$scheme};

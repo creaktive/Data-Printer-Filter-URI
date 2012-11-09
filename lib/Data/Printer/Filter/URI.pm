@@ -105,10 +105,10 @@ our @schemes = qw(
     urn::oid
 );
 
-filter qq(URI::$_) => sub {
+filter $_ => sub {
     my ($obj, $p) = @_;
 
-    my $str = $obj->as_string;
+    my $str = qq($obj);
 
     $str =~ s{^
         \b
@@ -140,6 +140,6 @@ filter qq(URI::$_) => sub {
         and defined $obj->host;
 
     return $str;
-} for @schemes;
+} for q(Mojo::URL), map +qq(URI::$_), @schemes;
 
 1;
