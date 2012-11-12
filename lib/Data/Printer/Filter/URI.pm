@@ -40,7 +40,7 @@ use Term::ANSIColor;
 =head1 DESCRIPTION
 
 This is a filter plugin for L<Data::Printer>.
-It filters through several L<URI> manipulation classes and displays the L<URI> as a string.
+It filters through several L<URI> manipulation classes and displays the L<URI> as a fancy string.
 
 =head2 Parsed Protocols
 
@@ -63,7 +63,8 @@ It filters through several L<URI> manipulation classes and displays the L<URI> a
 * rsync
 * rtsp
 * rtspu
-* sftp
+* scp (if L<URI::scp> is present)
+* sftp (if L<URI::sftp> is present)
 * sip
 * sips
 * snews
@@ -71,6 +72,8 @@ It filters through several L<URI> manipulation classes and displays the L<URI> a
 * telnet
 * tn3270
 * urn
+
+L<Mojo::URL> is also supported.
 
 =cut
 
@@ -94,7 +97,6 @@ our @schemes = qw(
     rsync
     rtsp
     rtspu
-    sftp
     sip
     sips
     snews
@@ -125,9 +127,7 @@ filter $_ => sub {
 
     $str =~ s{
         \b
-        \Q
-        @{[$obj->host]}
-        \E
+        \Q@{[$obj->host]}\E
         \b
     }{
         colored(
@@ -140,6 +140,6 @@ filter $_ => sub {
         and defined $obj->host;
 
     return $str;
-} for q(Mojo::URL), map +qq(URI::$_), @schemes;
+} for qw(Mojo::URL URI::scp URI::sftp), map +qq(URI::$_), @schemes;
 
 1;

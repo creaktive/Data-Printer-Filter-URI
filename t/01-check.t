@@ -91,7 +91,6 @@ rlogin://username@somehost.com
 rsync://gisle@perl.com/foo/bar
 rtsp://media.example.com:554/twister/audiotrack
 rtspu://media.example.com/twister/audiotrack
-sftp://host.example.com:22/orders.xml?Delete=true
 sip:phone@domain.ext
 sip:phone@domain.ext;maddr=127.0.0.1;ttl=16
 sip:phone@domain.ext?Subject=Meeting&Priority=Urgent
