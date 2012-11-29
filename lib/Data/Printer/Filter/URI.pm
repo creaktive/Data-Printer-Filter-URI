@@ -140,6 +140,11 @@ filter $_ => sub {
         and defined $obj->host;
 
     return $str;
-} for qw(Mojo::URL URI::scp URI::sftp), map +qq(URI::$_), @schemes;
+} for qw(Mojo::URL), map +qq(URI::$_), @schemes, qw(
+    scp
+    sftp
+    urn::isbn
+    urn::uuid
+);
 
 1;
